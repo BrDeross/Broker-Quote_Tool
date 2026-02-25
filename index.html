@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Insurance Bundle Options - Fillable Form</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root {
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #0ea5e9;
+      --bg: #ffffff;
+      --soft: #f8fafc;
+      --good: #16a34a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--ink);
+      background: var(--soft);
+      margin: 0; padding: 24px;
+    }
+    .page {
+      max-width: 960px; margin: 0 auto; background: var(--bg);
+      border: 1px solid var(--line); border-radius: 10px; padding: 24px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+    }
+    h1, h2, h3 { margin: 0 0 12px; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 18px; color: var(--muted); }
+    .header {
+      display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 18px;
+      border-bottom: 2px solid var(--line); padding-bottom: 16px;
+    }
+    .grid { display: grid; gap: 16px; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .card {
+      border: 1px solid var(--line); border-radius: 10px; background: #fff; padding: 16px;
+    }
+    .card h3 { font-size: 16px; margin-bottom: 10px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .row-3 { grid-template-columns: 1fr 1fr 1fr; }
+    label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 4px; }
+    input[type="text"], input[type="date"], input[type="number"], select, textarea {
+      width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+      font-size: 14px; background: #fff;
+    }
+    input[readonly] { background: #f3f4f6; }
+    .feature {
+      display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px dashed var(--line);
+      border-radius: 8px; background: #fafafa; margin-bottom: 8px;
+    }
+    .price-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: end; margin-top: 6px;
+    }
+    .total {
+      display: flex; justify-content: space-between; align-items: center;
+      background: #f0f9ff; border: 1px solid #bae6fd; color: #075985;
+      padding: 10px 12px; border-radius: 8px; margin-top: 10px; font-weight: 600;
+    }
+    .add-on { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+    .checkbox { display: flex; align-items: center; gap: 8px; }
+    .checkbox input { width: 18px; height: 18px; }
+    .fine { font-size: 12px; color: var(--muted); }
+    .footer {
+      margin-top: 18px; border-top: 2px solid var(--line); padding-top: 14px; display: grid; gap: 12px;
+    }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; background: #eef2ff; color: #3730a3; }
+    .good { color: var(--good); }
+    .note { background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+
+    /* Logo header */
+    .logo-wrap{
+      display:flex;
+      align-items:center;
+      min-height: 72px;
+    }
+    .logo-wrap img{
+      max-height: 70px;
+      width: auto;
+      max-width: 100%;
+      display:block;
+    }
+
+    /* Header tools */
+    .tools {
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      margin-top: 6px;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .btn:hover { border-color: #cbd5e1; }
+    .btn-primary {
+      border-color: #bae6fd;
+      background: #f0f9ff;
+      color: #075985;
+    }
+    .btn-success {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+      color: #166534;
+    }
+    .status {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+      min-height: 16px;
+    }
+
+    /* Bottom reminder */
+    .bottom-reminder{
+      margin-top: 10px;
+      padding: 14px 12px;
+      text-align: center;
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      border: 2px solid var(--ink);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    /* Hide honeypot */
+    .hidden { display:none !important; }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { box-shadow: none; border: none; padding: 0; }
+      .header { border: none; }
+      .card, .note, .total, .feature { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .tools, .status { display: none !important; } /* don’t print buttons */
+      .bottom-reminder{ page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Netlify Forms (static HTML) -->
+  <form class="page"
+        id="bundleForm"
+        name="bundle-options"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field">
+
+    <!-- required for Netlify Forms -->
+    <input type="hidden" name="form-name" value="bundle-options" />
+    <p class="hidden">
+      <label>Don’t fill this out: <input name="bot-field" /></label>
+    </p>
+
+    <div class="header">
+      <div class="logo-wrap">
+        <img src="https://lirp.cdn-website.com/26680d65/dms3rep/multi/opt/MS+Logo+no+tag-1920w.png" alt="Medi-Solutions Logo" />
+      </div>
+
+      <div class="grid">
+        <div class="row">
+          <div>
+            <label>Client Name</label>
+            <input type="text" name="clientName" placeholder="First Last" />
+          </div>
+          <div>
+            <label>Effective Date</label>
+            <input type="date" name="effectiveDate" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Agent Name</label>
+            <input type="text" name="agentName" />
+          </div>
+          <div>
+            <label>Agent Phone/Email</label>
+            <input type="text" name="agentContact" placeholder="(555) 555-5555 | name@example.com" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Date</label>
+            <input type="date" name="reportDate" />
+          </div>
+          <div></div>
+        </div>
+
+        <!-- Tools: generate share link per agent + PDF -->
+        <div class="tools">
+          <button type="button" class="btn btn-primary" id="copyAgentLinkBtn">Copy Agent Link</button>
+          <button type="button" class="btn" id="printPdfBtn">Download PDF</button>
+        </div>
+        <div class="status" id="status"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <!-- OPTION 1 -->
+      <div class="card" data-option="1">
+        <h3>Option 1 <span class="badge">Core Bundle</span></h3>
+        <div class="feature">
+          <strong>Included:</strong> Health Plan + Accident (Base)
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Health Plan Name</label>
+            <input type="text" name="opt1_health_name" placeholder="e.g., Silver HMO 2500" />
+          </div>
+          <div>
+            <label>Accident Level</label>
+            <input type="text" name="opt1_accident_level" value="Base" readonly />
+          </div>
+        </div>
+
+        <div class="price-row">
+          <div>
+            <label>Monthly Premium (Health)</label>
+            <input type="number" step="0.01" min="0" name="opt1_health_prem" placeholder="0.00" />
+          </div>
+          <div>
+            <label>Monthly Premium (Accident)</label>
+            <input type="number" step="0.01" min="0" name="opt1_acc_prem" placeholder="0.00" />
+          </div>
+        </div>
+
+        <div class="add-on">
+          <div class="checkbox">
+            <input type="checkbox" id="opt1_add_dental" name="opt1_add_dental" />
+            <label for="opt1_add_dental"><strong>Add Dental</strong> to Option 1</label>
+          </div>
+          <div class="price-row">
+            <div>
+              <label>Dental Plan Name</label>
+              <input type="text" name="opt1_dental_name" placeholder="e.g., PPO Premium" />
+            </div>
+            <div>
+              <label>Monthly Premium (Dental)</label>
+              <input type="number" step="0.01" min="0" name="opt1_dental_prem" placeholder="0.00" />
+            </div>
+          </div>
+        </div>
+
+        <div class="total">
+          <span>Option 1 Estimated Monthly Total</span>
+          <span class="good">$<span data-total="1">0.00</span></span>
+        </div>
+      </div>
+
+      <!-- OPTION 2 -->
+      <div class="card" data-option="2">
+        <h3>Option 2 <span class="badge">Enhanced Protection</span></h3>
+        <div class="feature">
+          <strong>Included:</strong> Health Plan + Accident (Middle) + Cancer
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Health Plan Name</label>
+            <input type="text" name="opt2_health_name" placeholder="e.g., Gold PPO 1500" />
+          </div>
+          <div>
+            <label>Accident Level</label>
+            <input type="text" name="opt2_accident_level" value="Middle" readonly />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Cancer Plan Name</label>
+            <input type="text" name="opt2_cancer_name" placeholder="e.g., Lump Sum Cancer 10k" />
+          </div>
+          <div>
+            <label>Waiting Period (if any)</label>
+            <input type="text" name="opt2_cancer_wait" placeholder="e.g., 30 days" />
+          </div>
+        </div>
+
+        <div class="price-row">
+          <div>
+            <label>Monthly Premium (Health)</label>
+            <input type="number" step="0.01" min="0" name="opt2_health_prem" placeholder="0.00" />
+          </div>
+          <div>
+            <label>Monthly Premium (Accident)</label>
+            <input type="number" step="0.01" min="0" name="opt2_acc_prem" placeholder="0.00" />
+          </div>
+        </div>
+        <div class="price-row">
+          <div>
+            <label>Monthly Premium (Cancer)</label>
+            <input type="number" step="0.01" min="0" name="opt2_cancer_prem" placeholder="0.00" />
+          </div>
+          <div>
+            <label>—</label>
+            <input type="text" readonly value="Included items subtotal auto-calculated" />
+          </div>
+        </div>
+
+        <div class="add-on">
+          <div class="checkbox">
+            <input type="checkbox" id="opt2_add_dental" name="opt2_add_dental" />
+            <label for="opt2_add_dental"><strong>Add Dental</strong> to Option 2</label>
+          </div>
+          <div class="price-row">
+            <div>
+              <label>Dental Plan Name</label>
+              <input type="text" name="opt2_dental_name" placeholder="e.g., PPO Standard" />
+            </div>
+            <div>
+              <label>Monthly Premium (Dental)</label>
+              <input type="number" step="0.01" min="0" name="opt2_dental_prem" placeholder="0.00" />
+            </div>
+          </div>
+        </div>
+
+        <div class="total">
+          <span>Option 2 Estimated Monthly Total</span>
+          <span class="good">$<span data-total="2">0.00</span></span>
+        </div>
+      </div>
+
+      <!-- OPTION 3 -->
+      <div class="card" data-option="3">
+        <h3>Option 3 <span class="badge">Max Protection</span></h3>
+        <div class="feature">
+          <strong>Included:</strong> Health Plan + Accident (Max) + Cancer + Hospital Indemnity
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Health Plan Name</label>
+            <input type="text" name="opt3_health_name" placeholder="e.g., Platinum PPO 750" />
+          </div>
+          <div>
+            <label>Accident Level</label>
+            <input type="text" name="opt3_accident_level" value="Max" readonly />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Cancer Plan Name</label>
+            <input type="text" name="opt3_cancer_name" placeholder="e.g., Lump Sum Cancer 20k" />
+          </div>
+          <div>
+            <label>Hospital Indemnity Plan</label>
+            <input type="text" name="opt3_hosp_name" placeholder="e.g., $200/day + ER rider" />
+          </div>
+        </div>
+
+        <div class="price-row">
+          <div>
+            <label>Monthly Premium (Health)</label>
+            <input type="number" step="0.01" min="0" name="opt3_health_prem" placeholder="0.00" />
+          </div>
+          <div>
+            <label>Monthly Premium (Accident)</label>
+            <input type="number" step="0.01" min="0" name="opt3_acc_prem" placeholder="0.00" />
+          </div>
+        </div>
+        <div class="price-row">
+          <div>
+            <label>Monthly Premium (Cancer)</label>
+            <input type="number" step="0.01" min="0" name="opt3_cancer_prem" placeholder="0.00" />
+          </div>
+          <div>
+            <label>Monthly Premium (Hospital Indemnity)</label>
+            <input type="number" step="0.01" min="0" name="opt3_hosp_prem" placeholder="0.00" />
+          </div>
+        </div>
+
+        <div class="add-on">
+          <div class="checkbox">
+            <input type="checkbox" id="opt3_add_dental" name="opt3_add_dental" />
+            <label for="opt3_add_dental"><strong>Add Dental</strong> to Option 3</label>
+          </div>
+          <div class="price-row">
+            <div>
+              <label>Dental Plan Name</label>
+              <input type="text" name="opt3_dental_name" placeholder="e.g., DHMO Plus" />
+            </div>
+            <div>
+              <label>Monthly Premium (Dental)</label>
+              <input type="number" step="0.01" min="0" name="opt3_dental_prem" placeholder="0.00" />
+            </div>
+          </div>
+        </div>
+
+        <div class="total">
+          <span>Option 3 Estimated Monthly Total</span>
+          <span class="good">$<span data-total="3">0.00</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="note">
+        <strong>Reminder:</strong> This is a summary for presentation only. Refer to carrier policy documents for full details, limitations, exclusions, and state variations. Premiums shown are estimates and subject to underwriting and eligibility.
+      </div>
+
+      <div class="row row-3">
+        <div>
+          <label>Chosen Option</label>
+          <select name="chosen_option" required>
+            <option value="">Select...</option>
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+          </select>
+        </div>
+        <div>
+          <label>Include Dental with Chosen Option?</label>
+          <select name="chosen_with_dental" required>
+            <option value="">Select...</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div>
+          <label>Estimated Monthly Total (Chosen)</label>
+          <input type="text" name="chosen_total" readonly placeholder="Auto-fills from selection" />
+        </div>
+      </div>
+
+      <!-- Hidden totals so Netlify captures them on submit -->
+      <input type="hidden" name="opt1_total" />
+      <input type="hidden" name="opt2_total" />
+      <input type="hidden" name="opt3_total" />
+
+      <div class="tools">
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+
+      <div class="bottom-reminder">
+        DON'T FORGET TO ASK ME ABOUT YOUR 401K
+      </div>
+    </div>
+  </form>
+
+  <script>
+    (function () {
+      const $ = (sel, ctx = document) => ctx.querySelector(sel);
+      const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+      const statusEl = $('#status');
+
+      function setStatus(msg) {
+        if (!statusEl) return;
+        statusEl.textContent = msg || '';
+      }
+
+      function money(n) {
+        const val = isFinite(n) && n !== "" ? Number(n) : 0;
+        return val.toFixed(2);
+      }
+
+      function num(n) {
+        const v = parseFloat(n);
+        return isFinite(v) ? v : 0;
+      }
+
+      function yyyyMmDd(d) {
+        const pad = (x) => String(x).padStart(2, '0');
+        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+      }
+
+      // ---------- URL PREFILL (agentName, agentContact, reportDate) ----------
+      function prefillFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const agentName = params.get('agentName') || params.get('agent') || '';
+        const agentContact = params.get('agentContact') || params.get('contact') || '';
+        const dateParam = params.get('date') || '';
+
+        const agentNameEl = $('input[name="agentName"]');
+        const agentContactEl = $('input[name="agentContact"]');
+        const reportDateEl = $('input[name="reportDate"]');
+
+        if (agentName && agentNameEl && !agentNameEl.value) agentNameEl.value = agentName;
+        if (agentContact && agentContactEl && !agentContactEl.value) agentContactEl.value = agentContact;
+
+        // default reportDate to today unless already filled; allow ?date=YYYY-MM-DD
+        if (reportDateEl && !reportDateEl.value) {
+          reportDateEl.value = dateParam || yyyyMmDd(new Date());
+        }
+      }
+
+      // ---------- TOTALS ----------
+      function calcOptionTotal(opt) {
+        const root = document.querySelector('.card[data-option="'+opt+'"]');
+        const fields = {
+          health: num($('input[name="opt'+opt+'_health_prem"]', root).value),
+          acc: num($('input[name="opt'+opt+'_acc_prem"]', root).value),
+          cancer: $('input[name="opt'+opt+'_cancer_prem"]', root) ? num($('input[name="opt'+opt+'_cancer_prem"]', root).value) : 0,
+          hosp: $('input[name="opt'+opt+'_hosp_prem"]', root) ? num($('input[name="opt'+opt+'_hosp_prem"]', root).value) : 0,
+          addDental: $('input[name="opt'+opt+'_add_dental"]', root)?.checked,
+          dental: num($('input[name="opt'+opt+'_dental_prem"]', root)?.value)
+        };
+        const baseTotal = fields.health + fields.acc + fields.cancer + fields.hosp;
+        const total = baseTotal + (fields.addDental ? fields.dental : 0);
+        $('[data-total="'+opt+'"]').textContent = money(total);
+        return total;
+      }
+
+      function updateChosenTotal() {
+        const chosen = $('select[name="chosen_option"]').value;
+        const withDental = $('select[name="chosen_with_dental"]').value;
+        const target = $('input[name="chosen_total"]');
+        if (!chosen) { target.value = ""; return; }
+        const opt = chosen.split(' ')[1]; // "Option X"
+        const card = document.querySelector('.card[data-option="'+opt+'"]');
+        const total = calcOptionTotal(opt);
+
+        if (withDental === 'No') {
+          const addDental = $('input[name="opt'+opt+'_add_dental"]', card)?.checked;
+          const dentalPrem = num($('input[name="opt'+opt+'_dental_prem"]', card)?.value);
+          target.value = '$ ' + money(addDental ? (total - dentalPrem) : total);
+        } else if (withDental === 'Yes') {
+          const addDental = $('input[name="opt'+opt+'_add_dental"]', card)?.checked;
+          const dentalPrem = num($('input[name="opt'+opt+'_dental_prem"]', card)?.value);
+          target.value = '$ ' + money(!addDental ? (total + dentalPrem) : total);
+        } else {
+          target.value = '$ ' + money(total);
+        }
+      }
+
+      function updateHiddenTotals(t1, t2, t3) {
+        const h1 = $('input[name="opt1_total"]');
+        const h2 = $('input[name="opt2_total"]');
+        const h3 = $('input[name="opt3_total"]');
+        if (h1) h1.value = money(t1);
+        if (h2) h2.value = money(t2);
+        if (h3) h3.value = money(t3);
+      }
+
+      function updateAllTotals() {
+        const t1 = calcOptionTotal(1);
+        const t2 = calcOptionTotal(2);
+        const t3 = calcOptionTotal(3);
+        updateHiddenTotals(t1, t2, t3);
+        updateChosenTotal();
+      }
+
+      // ---------- COPY AGENT LINK ----------
+      async function copyAgentLink() {
+        const agentName = ($('input[name="agentName"]')?.value || '').trim();
+        const agentContact = ($('input[name="agentContact"]')?.value || '').trim();
+
+        if (!agentName) {
+          setStatus('Enter Agent Name first, then click Copy Agent Link.');
+          return;
+        }
+
+        const url = new URL(window.location.href);
+        url.searchParams.set('agentName', agentName);
+        if (agentContact) url.searchParams.set('agentContact', agentContact);
+
+        // optional: set today's date in link
+        const reportDate = $('input[name="reportDate"]')?.value;
+        if (reportDate) url.searchParams.set('date', reportDate);
+
+        try {
+          await navigator.clipboard.writeText(url.toString());
+          setStatus('Copied agent link to clipboard.');
+        } catch (e) {
+          // fallback
+          const temp = document.createElement('textarea');
+          temp.value = url.toString();
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand('copy');
+          document.body.removeChild(temp);
+          setStatus('Copied agent link (fallback).');
+        }
+      }
+
+      // ---------- PDF (print) ----------
+      function printPdf() {
+        setStatus('Print dialog opened — choose "Save as PDF".');
+        window.print();
+      }
+
+      // Wire up events
+      const inputs = $$('input, select');
+      inputs.forEach(el => {
+        el.addEventListener('input', updateAllTotals);
+        el.addEventListener('change', updateAllTotals);
+      });
+
+      $('#copyAgentLinkBtn')?.addEventListener('click', copyAgentLink);
+      $('#printPdfBtn')?.addEventListener('click', printPdf);
+
+      // Init
+      prefillFromUrl();
+      updateAllTotals();
+    })();
+  </script>
+</body>
+
+</html>
